@@ -1,0 +1,74 @@
+//混合
+@mixin common {
+  margin: 1px 0;
+  font-size: 10px;
+}
+.tip-warning {
+  @include common;
+  color: orange;
+}
+.tip-error {
+  @include common;
+  color: red;
+}
+
+.tip-success {
+  @include common;
+  color: green;
+}
+
+//混合后的代码，会有重复代码
+.tip-warning {
+  margin: 1px 0;
+  font-size: 10px;
+  color: orange;
+}
+.tip-error {
+  margin: 1px 0;
+  font-size: 10px;
+  color: red;
+}
+
+.tip-success {
+  margin: 1px 0;
+  font-size: 10px;
+  color: green;
+}
+
+//继承
+.tip {
+  margin: 1px 0;
+  font-size: 10px;
+}
+.tip-warning {
+  @extend .tip;
+  color: orange;
+}
+.tip-error {
+  @extend .tip;
+  color: red;
+}
+
+.tip-success {
+  @extend .tip;
+  color: green;
+}
+//继承后的代码，无重复代码
+.tip,
+.tip-warning,
+.tip-error,
+.tip-success {
+  margin: 1px 0;
+  font-size: 10px;
+}
+
+.tip-warning {
+  color: orange;
+}
+.tip-error {
+  color: red;
+}
+
+.tip-success {
+  color: green;
+}
