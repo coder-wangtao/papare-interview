@@ -12,13 +12,13 @@ interface Child extends Parent {
 
 let p1: Parent = { a: "" };
 let c1: Child = { a: "", b: "" };
-p1 = c1; //子传递给父，类型是安全的；
-c1 = p1; //父传递给子，类型不安全  //协变
+p1 = c1; //子类型传递给父类型，类型是安全的；
+c1 = p1; //父类型传递给子类型，类型不安全  //协变
 
 let p2: Array<Parent> = [{ a: "" }];
 let c2: Array<Child> = [{ a: "", b: "" }];
-p2 = c2; //子传递给父，类型是安全的；
-c2 = p2; //父传递给子，类型不安全 //协变
+p2 = c2; //子类型传递给父类型，类型是安全的；
+c2 = p2; //父类型传递给子类型，类型不安全 //协变
 
 type pTransform = (p: Parent) => void;
 type cTransform = (c: Child) => void;
