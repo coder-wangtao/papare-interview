@@ -9,23 +9,3 @@ onMounted(() => {
 <template>
   <div ref="title">Test</div>
 </template>
-
-<style scoped lang="scss">
-.tip {
-  margin: 1px 0;
-  font-size: 10px;
-}
-.tip-warning {
-  @extend .tip;
-  color: orange;
-}
-.tip-error {
-  @extend .tip;
-  color: red;
-}
-
-.tip-success {
-  @extend .tip;
-  color: green;
-}
-</style>
