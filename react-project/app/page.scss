@@ -1,0 +1,19 @@
+@use "./common.scss";
+
+.nav {
+  @include common.flex(flex-start) {
+    color: red;
+  }
+}
+.header {
+  width: 100%;
+  @include common.flex(center) {
+    background: #000;
+  }
+  @include common.responseTo("phone") {
+    height: 30px;
+  }
+  @include common.responseTo("pad") {
+    height: 50px;
+  }
+}

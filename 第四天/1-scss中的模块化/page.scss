@@ -1,0 +1,16 @@
+// @import url("./common.scss");  这是css的导入方式(这种导入方式会报错)(这种方式可以导入一个纯css代码，不要导入混合，变量)
+//@import "./common.scss"; 这是scss的导入方式,但是会造成变量名冲突，全局代码污染，不支持私有变量（要被淘汰）
+
+@import "./common.scss";
+.foo {
+  color: $color;
+  @include flex();
+}
+
+//@use "./common.scss"; 这是scss的导入方式,不会变量名冲突，不会全局代码污染，支持私有变量（流行）
+
+@use "./common.scss";
+.foo {
+  color: common.$color;
+  @include common.flex();
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" class="txt" />
+    <script>
+      var inp = document.querySelector("input");
+      function search() {
+        console.log("搜索:" + inp.value);
+      }
+      let isComposition = false;
+
+      inp.addEventListener("input", function () {
+        if (isComposition) {
+          return;
+        }
+        search();
+      });
+      inp.addEventListener("compositionstart", function () {
+        console.log("开始输入");
+        isComposition = true;
+      });
+      inp.addEventListener("compositionend", function () {
+        console.log("结束输入");
+        isComposition = false;
+        search();
+      });
+    </script>
+  </body>
+</html>
