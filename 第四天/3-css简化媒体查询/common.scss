@@ -12,7 +12,7 @@ $color: red;
   align-items: $layout;
   @content;
 }
-
+// $breakPoints 映射
 $breakPoints: (
   "phone": (
     320px,
