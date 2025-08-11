@@ -1,0 +1,56 @@
+{
+  "name": "@vue/reactivity",
+  "version": "3.4.33",
+  "description": "@vue/reactivity",
+  "main": "index.js",
+  //工程化环境里，import xxx "@vue/reactivity" //@vue/reactivity去哪里找？就是去这个module找
+  "module": "dist/reactivity.esm-bundler.js",
+  //工程化环境里，import xxx "@vue/reactivity" //@vue/reactivity的类型定义从哪找？就是去这个types找
+  "types": "dist/reactivity.d.ts",
+  //我们从cdn导入reactivity，cdn从npm上去找，npm上很多文件，jsdelivr从下面位置找，然后缓存到cdn上
+  "unpkg": "dist/reactivity.global.js",
+  "jsdelivr": "dist/reactivity.global.js",
+  //上传到npm,不需要上传所有的文件，通过这个字段指定上传到npm上的时候上传哪个文件
+  "files": ["index.js", "dist"],
+  //rollup工程化，通过这个字段配置导出结果（更详细）
+  "exports": {  
+    ".": {
+      "types": "./dist/reactivity.d.ts",
+      "node": {
+        "production": "./dist/reactivity.cjs.prod.js",
+        "development": "./dist/reactivity.cjs.js",
+        "default": "./index.js"
+      },
+      "module": "./dist/reactivity.esm-bundler.js",
+      "import": "./dist/reactivity.esm-bundler.js",
+      "require": "./index.js"
+    },
+    "./*": "./*"
+  },
+  //没有副作用，支持树摇优化
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuejs/core.git",
+    "directory": "packages/reactivity"
+  },
+
+  //用在rollup的打包脚本里面，生成不同的打包结果
+  "buildOptions": {
+    "name": "VueReactivity",
+    "formats": ["esm-bundler", "esm-browser", "cjs", "global"]
+  },
+  "keywords": ["vue"],
+  "author": "Evan You",
+  "license": "MIT",
+  //我这个库有bug的话，你要提交到哪个地址
+  "bugs": {
+    "url": "https://github.com/vuejs/core/issues"
+  },
+  //库的主页
+  "homepage": "https://github.com/vuejs/core/tree/main/packages/reactivity#readme",
+  //依赖
+  "dependencies": {
+    "@vue/shared": "workspace:*"
+  }
+}
