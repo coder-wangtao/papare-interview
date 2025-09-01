@@ -23,8 +23,7 @@
 //     return target[key];
 //   },
 // });
-
-// proxy.c;
+// proxy1.c;
 
 // //此时是可以监听a b的，因为c()的this是proxy2(代理对象)，c()中this.a和this.b访问的是proxy2(代理对象)的a b,可以被proxy捕捉
 // const proxy2 = new Proxy(obj, {
@@ -34,7 +33,7 @@
 //   },
 // });
 
-// proxy.c;
+// proxy2.c;
 
 const obj2 = {
   a: 1,
