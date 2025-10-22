@@ -145,3 +145,8 @@ window.JSBridge = {
 // JavaScript 端可以确定 JSBridge 的存在，直接调用即可。
 // 它的缺点是：
 // 如果桥的实现方式有更改，JSBridge 需要兼容多版本的 Native Bridge 或者 Native Bridge 兼容多版本的 JSBridge。
+
+//TODO:IOS套壳webview
+//https://blog.csdn.net/u010633266/article/details/103103743/
+
+//https://github.com/BothEyes1993/webappTest
