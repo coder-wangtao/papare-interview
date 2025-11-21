@@ -1,0 +1,186 @@
+<!-- 
+* 将文件交给 Web Worker，由 Web Worker 执行切片操作，然后等待 Web Worker 回传文件切片
+* 收到 Worker 回传的文件切片之后，将切片存入 allFileChunks 数组，并调用 uploadChunk 上传切片文件
+* uploadChunk 方法是一个支持并发控制的上传方法，并发控制的核心思路是
+  * 在请求开始之前时当前并发数的检测 和 是否已全部上传完的检测，这保证了请求数量不超过并发数
+  * 后续请求的触发是通过 Promise.then 的回调来完成的，即每完成一个请求，就发送下一个请求
+* 文件上传的相关逻辑和之前一样，没有变化 
+-->
+
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+import WebWorker from "./web-worker.js?worker";
+
+const inputRef = ref(null);
+
+// 分片大小，单位 MB
+const chunkSize = 1024 * 1024; //1MB
+// 分片大小，单位字节
+// const chunkSize = 4
+
+// 存放所有的文件切片
+let allFileChunks = [];
+
+// WebWorker 实例
+let worker = null;
+
+// 记录当前文件已经切了多少片了
+let hasBeenSplitNum = 0;
+
+// 当前上传的 chunk 在 allFileChunks 数组中的索引
+let allFileChunksIdx = 0;
+
+// 当前并发数
+let curConcurrencyNum = 0;
+// 最大并发数
+const MAX_CONCURRENCY_NUM = 6;
+
+// 文件已上传的切片列表，每个元素都是 fileName + idx，比如：test.txt10
+let fileChunks = [];
+
+// 上传文件
+async function handleUpload() {
+  // 上传开始前的数据初始化
+  allFileChunksIdx = 0;
+  allFileChunks = [];
+  hasBeenSplitNum = 0;
+  curConcurrencyNum = 0;
+  fileChunks = [];
+
+  // 获取文件对象
+  const file = inputRef.value.files[0];
+
+  // 获取当前文件已上传的切片列表
+  fileChunks = await getFileChunksByFileName(file.name);
+
+  // 实例化 WebWorker，用来做文件切片
+  worker = new WebWorker();
+
+  // 将文件切片工作交给 web worker 来完成
+  worker.postMessage({ operation: "splitChunkForFile", file, chunkSize });
+
+  // 总 chunk 数
+  const total = Math.ceil(file.size / chunkSize);
+
+  // 接收 worker 发回的切片（持续发送，worker 每完成一个切片就发一个）
+  worker.onmessage = function (e) {
+    const { data } = e;
+    const { operation } = data;
+
+    if (operation === "splitChunkForFile") {
+      hasBeenSplitNum += 1;
+      pushFileChunk(data.file);
+
+      // 说明整个文件已经切完了，释放 worker 实例
+      if (hasBeenSplitNum === total) {
+        this.terminate();
+      }
+    }
+  };
+}
+
+/**
+ * 将 worker 完成切片存放到 allFileChunks 中，并触发上传逻辑
+ * @param { File } file 文件切片的 File 对象
+ */
+function pushFileChunk(file) {
+  allFileChunks.push(file);
+  uploadChunk();
+}
+
+/**
+ * 并发上传文件切片，并发数 6（统一域名浏览器最多有 6个并发）
+ */
+function uploadChunk() {
+  if (
+    curConcurrencyNum >= MAX_CONCURRENCY_NUM ||
+    allFileChunksIdx >= allFileChunks.length
+  )
+    return;
+
+  // 获取文件对象
+  const file = inputRef.value.files[0];
+
+  const { name, size } = file;
+  // 总 chunk 数
+  const total = Math.ceil(size / chunkSize);
+
+  // 从 allFileChunks 中获取指定索引的 fileChunk，这个索引的存在还是为了保证按顺序取和上传 chunk
+  const fileChunk = allFileChunks[allFileChunksIdx];
+
+  // 说明当前切片已经上传过了，直接跳过，上传下一个
+  if (fileChunks.some((chunkPath) => chunkPath.endsWith(fileChunk.name))) {
+    console.log(`切片 ${fileChunk.name} 已经上传过了，本次跳过`);
+    allFileChunksIdx += 1;
+    uploadChunk();
+    return;
+  }
+
+  // 并发数 + 1
+  curConcurrencyNum += 1;
+
+  const formData = new FormData();
+  formData.append("file", fileChunk);
+  // 标识当前 chunk 属于哪个文件，方便服务端做内容分类和合并，实际场景中这块儿需要考虑唯一性
+  formData.append("uuid", name);
+  // 标识当前 chunk 是文件的第几个 chunk，即保证 chunk 顺序
+  formData.append("index", allFileChunksIdx);
+  // 标识总共有多少 chunk，方便服务端判断是否已经接收完所有 chunk
+  formData.append("total", total);
+
+  axios
+    .request({
+      url: "http://localhost:3000/uplaod",
+      method: "POST",
+      data: formData,
+      // 上传进度，这个是通过 XMLHttpRequest 实现的能力
+      onUploadProgress: function (progressEvent) {
+        // 当前已上传完的大小 / 总大小
+        const percentage = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        console.log("Upload Progress: ", `${percentage}%`);
+      },
+    })
+    .then((res) => {
+      console.log("result = ", res.data);
+    })
+    .finally(() => {
+      /**
+       * 当前请求完成，
+       */
+      // 并发数 - 1
+      curConcurrencyNum -= 1;
+      // 上传下一个切片
+      uploadChunk();
+    });
+
+  // 更新 chunk 索引，方便取下一个 chunk
+  allFileChunksIdx += 1;
+
+  uploadChunk();
+}
+
+/**
+ * 获取文件已上传的切片
+ * @param { string } fileName 文件名
+ */
+async function getFileChunksByFileName(fileName) {
+  const { data } = await axios.request({
+    url: "http://localhost:3000/get-file-chunks-by-uuid",
+    method: "GET",
+    params: {
+      uuid: fileName,
+    },
+  });
+  return data;
+}
+</script>
+
+<template>
+  <div>
+    <input type="file" ref="inputRef" />
+    <button @click="handleUpload">Upload</button>
+  </div>
+</template>
