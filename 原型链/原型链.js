@@ -1,7 +1,9 @@
 // 对象的原型{}  [[prototype]]  __proto__ /Object.getPrototypeof(info)
 // 函数的原型 function foo(){} prototype
 
-function Foo() {}
+function Foo() {
+    
+}
 
 const f1 = new Foo();
 const f2 = new Foo();
