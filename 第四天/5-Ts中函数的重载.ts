@@ -1,4 +1,4 @@
-//函数声名
+//函数声明
 function message(options: object): void;
 function message(text: string, onClose?: Function): void;
 function message(text: string, mode: string, duration?: number): void;

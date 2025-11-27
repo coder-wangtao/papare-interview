@@ -20,25 +20,33 @@ type manType = OrType<Man3, OrType<Man1, Man2>>;
 let man: manType = {
   funny: "222",
 };
-
-// interface r1 {
-//   fortune: never;
-//   funny: never;
-//   foreign: string;
-// }
-
-// interface r2 {
+//OrType<Man1, Man2>:
+// {
 //   fortune: never;
 //   funny: string;
-//   foreign: never;
 // }
-
-// interface r3 {
+// |
+// {
 //   fortune: string;
 //   funny: never;
-//   foreign: never;
 // }
 
-// type res = (r1 | r2) & {};
-
+// OrType<Man3, OrType<Man1, Man2>>:
+// {
+//   fortune: never;
+//   funny: string;
+//   foreign:never;
+// }
+// |
+// {
+//   fortune: string;
+//   funny: never;
+//   foreign:never;
+// }
+// |
+// {
+//   fortune: never;
+//   funny: never;
+//   foreign:string;
+// }
 export {};

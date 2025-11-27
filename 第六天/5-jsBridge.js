@@ -62,7 +62,7 @@ window.webkit.messageHandlers.nativeBridge.postMessage(message);
 // protocol 是 qunarhy，host 则是 hy。
 
 // 拦截 URL SCHEME 的主要流程是：Web 端通过某种方式（例如 iframe.src）发送 URL Scheme 请求，之后 Native 拦截到请求并根据 URL SCHEME（包括所带的参数）进行相关操作。
-// 在时间过程中，这种方式有一定的缺陷：
+// 在实现过程中，这种方式有一定的缺陷：
 // 使用 iframe.src 发送 URL SCHEME 会有 url 长度的隐患。
 // 有些方案为了规避 url 长度隐患的缺陷，在 iOS 上采用了使用 Ajax 发送同域请求的方式，并将参数放到 head 或 body 里。
 // 这样，虽然规避了 url 长度的隐患，但是 WKWebView 并不支持这样的方式。

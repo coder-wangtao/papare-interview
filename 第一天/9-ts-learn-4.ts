@@ -10,10 +10,11 @@ namespace LEARN_FOUR {
   class Grandson extends Child {
     money() {}
   }
+
   let t1: (instance: Child) => void = (instance: Parent) => ""; //函数的参数是逆变的
   let t2: (instance: Child) => Child = (instance: Child) => new Grandson(); //函数的返回值是协变的
   // 记忆：传父（参数是逆变的）返子（返回值是协变的）
-  // 逆变 输入/参数类型可从父类赋值给子类。
+  // 逆变 c
   // 协变 输出/返回类型可从子类赋值给父类。
 
   // 推导公式
