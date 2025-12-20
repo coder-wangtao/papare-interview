@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+    <style>
+      .container {
+        background: black;
+        padding: 20px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 100px;
+        grid-auto-rows: 80px;
+      }
+      .product {
+        justify-self: end;
+      }
+      .stock {
+        justify-self: start;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item header product">product</div>
+      <div class="item header stock">stock</div>
+      <div class="item product">iphone 16</div>
+      <div class="item stock">10,320</div>
+      <div class="item product">RedMi 14</div>
+      <div class="item stock">9,121</div>
+      <div class="item product">xiaomi</div>
+      <div class="item stock">2,222</div>
+      <div class="item product">iphone 16</div>
+      <div class="item stock">10,320</div>
+      <div class="item product">RedMi 14</div>
+      <div class="item stock">9,121</div>
+      <div class="item product">xiaomi</div>
+      <div class="item stock">2,222</div>
+    </div>
+  </body>
+</html>
