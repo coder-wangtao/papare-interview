@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="changeText(this)">改变文字</button>
+  </body>
+  <script>
+    setTimeout(() => {
+      setTimeout(() => {
+        setTimeout(() => {
+          setTimeout(() => {
+            setTimeout(() => {
+              setTimeout(() => {
+                setTimeout(() => {}, 4);
+              }, 4);
+            }, 4);
+          }, 0);
+        }, 0);
+      }, 0);
+    }, 0);
+
+    function sleep(time) {
+      //辅助函数，阻塞主线程
+      let start = Date.now();
+      while (Date.now() - start < time) {}
+    }
+    function changeText(that) {
+      that.innerText = "文字已改变";
+      console.log(that.innerText);
+      sleep(3000);
+    }
+  </script>
+</html>
