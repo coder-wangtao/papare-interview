@@ -20,7 +20,7 @@ const app = express();
 // 解决跨域问题
 app.use(
   cors({
-    maxAge: 86400,
+    maxAge: 86400,  
   })
 );
 

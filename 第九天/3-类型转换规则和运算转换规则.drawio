@@ -1,0 +1,272 @@
+<mxfile host="65bd71144e">
+    <diagram id="-95KyCsEKqqpSky5S7U5" name="Page-1">
+        <mxGraphModel dx="395" dy="217" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="10000" pageHeight="10000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="原始类型 -&amp;gt; 数字类型&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="180" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="405" y="80" width="20" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="true -&amp;gt;1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="70" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="false -&amp;gt; 0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="110" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="null -&amp;gt; 0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="150" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="undefined-&amp;gt; NaN" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="190" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="string" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="435" y="260" width="50" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="485" y="230" width="20" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="空字符串(含空白字符) -&amp;gt; 0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="505" y="220" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="去掉引号，不是数字就是NaN" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="495" y="300" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="所有-&amp;gt; bool类型&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="450" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="405" y="350" width="20" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="null -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="415" y="340" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="undefined -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="415" y="368" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="number" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="430" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="string" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="510" width="50" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="490" width="20" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="空字符串(含空白字符) -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="485" y="480" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="其他&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp;-&amp;gt; false&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="540" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.25;" parent="1" vertex="1">
+                    <mxGeometry x="485" y="410" width="20" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="0 -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="398" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="其他 -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="495" y="460" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="NaN -&amp;gt; false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="495" y="430" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="对象 -&amp;gt; true" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="570" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="原始类型-&amp;gt; 字符类型&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="275" y="692" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="630" width="20" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="null -&amp;gt; &quot;null&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="610" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="undefined -&amp;gt; &quot;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;undefined&quot;&amp;nbsp;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="640" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="number -&amp;gt; &quot;数字&quot;&amp;nbsp;&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="670" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="boolean" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="732" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="495" y="708" width="20" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="true -&amp;gt; &quot;true&quot;&amp;nbsp;&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="692" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="false -&amp;gt; &quot;false&quot;&amp;nbsp;&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="772" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="63" target="73" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="对象类型 -&amp;gt; 原始类型&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="275" y="890" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="调用valueOf" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="890" width="110" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" target="76" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="570" y="910" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="78" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="76" target="77" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="得到的还是对象？重新调用toString" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="625" y="890" width="110" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="得到的还是对象？报错" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="890" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="80" width="20" height="850" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="类型转换规则" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="485" width="130" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="81" target="82" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="算数运算(+ - * / % ++ --)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1460" y="110" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="转成原始类型" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="110" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1790" y="50" width="20" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="转成数字，然后运算" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1820" y="30" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="特殊情况：x+y,x和y有一个是字符串。转换为字符串，然后拼接" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1820" y="110" width="360" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="特殊情况：NaN和任何类型运算得到的还是NaN" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1820" y="190" width="270" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="比较运算(&amp;gt; &amp;lt; &amp;gt;= &amp;lt;= == != === !==)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1460" y="470" width="200" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="1660" y="312.5" width="20" height="357.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="90" target="91" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="&amp;gt; &amp;lt; &amp;gt;= &amp;lt;=" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="290" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="转成原始类型" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1850" y="290" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1960" y="250" width="20" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="转成数字，然后比较" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1980" y="238" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="特殊情况：两端全是字符串，比较字典顺序" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1980" y="295" width="250" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="特殊情况：两端存在NaN，一定为false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1980" y="350" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="===" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="400" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1790" y="390" width="20" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="类型和值都必须相同" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="378.75" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;特殊情况：两端存在NaN，一定为false&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="431.25" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="==" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="515" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1790" y="470" width="20" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="两端类型形同，比较值" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="461.25" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="两端都是原始类型，转换成数字比较" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1806" y="490" width="220" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="一端是原始类型，一端是对象类型，把对象转换成原始类型后比较" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="520" width="370" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="特殊情况：undefined和null只有与自身比较，或者相互比较时，才会返回true" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1808" y="550" width="430" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="特殊情况：两端存在NaN，一定为false" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1810" y="580" width="230" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="113" target="114" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="!= !==" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1700" y="640" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="对相等取反" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1850" y="640" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="116" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1710" y="830.1428571428571" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="116" value="逻辑运算(!&amp;nbsp; &amp;amp;&amp;amp; || ?)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1460" y="810" width="190" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="转换成boolean" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1710" y="810" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="1808" y="778.5" width="20" height="103" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="x &amp;amp;&amp;amp; y" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1840" y="762" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="x || y" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1845" y="870" width="50" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;" parent="1" vertex="1">
+                    <mxGeometry x="1895" y="738" width="20" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.2;" parent="1" vertex="1">
+                    <mxGeometry x="1900" y="846" width="20" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="x为false,返回x" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1915" y="722" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="x为true,返回y" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1915" y="802" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" value="x为false,返回y" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1920" y="832" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" value="x为true,返回x" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1920" y="910" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="1320" y="31.5" width="20" height="898.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="运算转换规则" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="1180" y="461.25" width="130" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
