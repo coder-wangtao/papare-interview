@@ -1,0 +1,45 @@
+.c1 {
+  width: 50%;
+  height: 300px;
+  background: #ee6a5f;
+  margin-left: auto;
+}
+.c2 {
+  /* 继承父元素宽度 */
+  width: inherit;
+  height: 80%;
+  background: #61c354;
+  /* 继承父元素margin */
+  margin: inherit;
+}
+
+/* initial 设置默认值 */
+.default {
+  line-height: initial;
+}
+
+/* unset:
+作用: unset 会将属性恢复为默认值。
+对于 继承的属性，unset 会把它的值设置为继承的默认值（也就是从父元素继承的值）。
+对于 非继承的属性，unset 会把它的值设置为该属性的初始值。 */
+div {
+  color: blue;
+}
+
+p {
+  color: unset; /* 这里 p 会继承 div 的 color 属性值 */
+}
+
+/* revert: 会将 CSS 属性的值恢复成 浏览器的默认样式，或者如果有继承关系，就恢复成 从父元素继承的值。*/
+/* 恢复为浏览器的默认值：
+如果你对某个元素应用了样式，而这些样式在浏览器的默认样式表中是被覆盖了（比如 color: blue），
+那么 revert 会让它回到浏览器的 原始默认值。浏览器的默认值通常是黑色（color: black）等。
+继承样式：
+如果该属性是继承型的，比如 color，font-family，revert 会让它 恢复为父元素的样式。 */
+div {
+  color: blue;
+}
+
+p {
+  color: revert; /* p 的 color 会恢复为浏览器默认的值，通常是黑色 */
+}
