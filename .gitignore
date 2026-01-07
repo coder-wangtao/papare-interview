@@ -2,6 +2,9 @@
 
 # dependencies
 /upload/normal-upload/upload-server/node_modules
+/upload/aliyun-upload/upload-client/node_modules
+/upload/aliyun-upload/upload-server/node_modules
+
 /.pnp
 .pnp.js
 
