@@ -11,8 +11,8 @@ function init() {
 init();
 
 const fontSize = 40 * devicePixelRatio;
-const columnCount = Math.floor(cvs.width / fontSize);
-const charIndex = new Array(columnCount).fill(0);
+const columnCount = Math.floor(cvs.width / fontSize); // 整个画布能放多少列字符 每一列是一个“字符雨轨道”
+const charIndex = new Array(columnCount).fill(0); // charIndex[i] 表示：第 i 列当前画到第几个字符（第几行）
 
 function draw() {
   ctx.fillStyle = "rgba(0,0,0,0.1)";
@@ -25,6 +25,9 @@ function draw() {
     const y = charIndex[i] * fontSize;
     ctx.fillText(text, x, y);
     if (y > cvs.height && Math.random() > 0.99) {
+      // 字符落到底部后：
+      // 不是立刻重置
+      // 只有 1% 的概率重置
       charIndex[i] = 0;
     } else {
       charIndex[i]++;

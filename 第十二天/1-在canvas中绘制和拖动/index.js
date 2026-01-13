@@ -14,11 +14,11 @@ function init() {
 class Point {
   constructor() {
     this.r = 6;
-    this.x = getRandom(0, cvs.width - this.r);
-    this.y = getRandom(0, cvs.height - this.r);
-    this.xSpeed = getRandom(-50, 50);
-    this.ySpeed = getRandom(-50, 50);
-    this.lastDrawTime = null;
+    this.x = getRandom(0, cvs.width - this.r); // 随机初始位置x
+    this.y = getRandom(0, cvs.height - this.r); // 随机初始位置y
+    this.xSpeed = getRandom(-50, 50); //x方向速度
+    this.ySpeed = getRandom(-50, 50); //y方向速度
+    this.lastDrawTime = null; //上一帧时间
   }
   draw() {
     if (this.lastDrawTime) {
@@ -35,7 +35,7 @@ class Point {
         this.xSpeed = -this.xSpeed;
       }
       if (y > cvs.height - this.r / 2) {
-        x = cvs.height - this.r / 2;
+        y = cvs.height - this.r / 2;
         this.ySpeed = -this.ySpeed;
       } else if (y < 0) {
         y = 0;
@@ -67,7 +67,7 @@ class Graph {
       p1.draw();
       for (let j = i + 1; j < this.points.length; j++) {
         const p2 = this.points[j];
-        const d = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+        const d = Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2); // 计算点与点之间距离并画线
         if (d > this.maxDis) {
           continue;
         }
