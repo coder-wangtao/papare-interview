@@ -1,0 +1,320 @@
+# 技术讲解
+
+## 什么问题
+
+Vite 在开发环境性能已经非常不错了，因为Vite在开发环境使用了esbuild进行了依赖预构建。一般情况下很舒服，但是也会有一些坑点。
+
+生产环境应该如何优化呢？ Vite 打包时用的是 Rollup，但是基本的优化处理，其实和 Webpack 差不多，但是无论如何优化问题我们还是要进行处理的。
+
+## 解决思路
+
+**开发环境**的依赖预构建没什么可多说的，但是会存在一个问题，如果我们使用了按需引入的插件，类似于[element-plus](https://element-plus.org/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5)这一种，特别是存在切换路由的情况的时候，可能会导致一种情况，我们需要连续点两次，才会生效，而且界面还可能存在闪动的情况。仔细查看会发现点击路由的时候，Vite还进行了依赖预构建的处理：
+
+```js
+[vite] ✨ new dependencies optimized: ......
+[vite] ✨ optimized dependencies changed. reloading
+```
+
+为了防止在启动时占用大量编译时间，vite只会处理一些常用的组件和依赖，特别是在按需加载的时候，加上vite本身就会忽略`node_modules`中的内容，这就导致一些按需的依赖会在开发进入到对应页面时才会处理，从而导致一直在处理依赖优化和reloading。
+
+通过分析，类似于`element-plus`，`vant`等等这种可以按需加载的组件，Vite的优化触发是在style样式加载，那么我们就让他开发模式把所有组件的样式全优化了
+
+```json
+optimizeDeps: {
+  include: [
+    "element-plus/es/components/**/style/css",
+  ]
+},
+```
+
+**生产环境**的优化，大部分都是和打包优化相关的
+
+- 分包策略
+- 构建分析
+- 摇树优化
+- 代码压缩
+- GZIP压缩
+- 图片压缩
+- CDN加速
+
+这些基本都是常用的手段，就不在一一描述了，只不过在一些优化上，我们可能需要vite插件配合，甚至需要自定义插件
+
+## 解决细节
+
+### 1、分包策略
+
+在生产环境下 Vite 完全利用 Rollup 进行构建，因此拆包也是基于 Rollup 来完成的
+
+#### Vite 默认拆包策略
+
+只不过Rollup专注于JS库的打包，对应用构建的能力还有待提升，Vite 正好是补足了 Rollup 应用构建的能力，在拆包能力这一块的扩展就是很好的体现
+
+**项目的基本结构：**
+
+```javascript
+.
+├── public
+│   ├── vite.svg
+├── src
+│   ├── routes
+│   │			└── index.ts				//路由配置
+│   ├── views
+│   │			├── AboutView.vue 	// 懒加载路由页面
+│   │			├── HomeView.vue		// 直接加载路由页面
+│   │			├── PhotoView.vue   // 懒加载路由页面
+│   │			├── StudentView.vue // 懒加载路由页面
+│   │			└── UserView.vue		// 懒加载路由页面
+│   ├── App.vue
+│   └── main.ts
+└── index.html                
+```
+
+**执行打包:**
+
+```javascript
+vite v4.4.9 building for production...
+✓ 34 modules transformed.
+dist/index.html                        0.45 kB │ gzip:  0.29 kB
+dist/assets/AboutView-786d9592.css     0.04 kB │ gzip:  0.06 kB
+dist/assets/index-d1e7a483.css         0.27 kB │ gzip:  0.17 kB
+dist/assets/UserView-18eefd25.js       0.54 kB │ gzip:  0.35 kB
+dist/assets/StudentView-85c73246.js    0.55 kB │ gzip:  0.35 kB
+dist/assets/AboutView-355cc1df.js      0.74 kB │ gzip:  0.42 kB
+dist/assets/index-c0c63fdb.js        216.25 kB │ gzip: 51.48 kB
+✓ built in 552ms
+```
+
+**打包之后的产物：**
+
+```javascript
+.
+├── assets
+│   ├── AboutView-355cc1df.js   // Async Chunk
+│   ├── AboutView-786d9592.css 	// Async Chunk (CSS)
+│   ├── index-c0c63fdb.js      	// Initial Chunk
+│   ├── index-d1e7a483.css     	// Initial Chunk (CSS)
+│   ├── StudentView-85c73246.js // Async Chunk
+│   └── UserView-18eefd25.js		// Async Chunk
+├── index.html                 	// 入口 HTML
+└── vite.svg										// 静态资源
+```
+
+这是没有任何配置的vite打包之后的产物，**自动对懒加载的路由和与其对应的css进行的处理**
+
+#### 自定义拆包策略
+
+针对更细粒度的拆包，`Vite`还是基于的`Rollup`处理。
+
+`manualChunks` 主要有两种配置的形式，可以配置为一个对象或者一个函数。
+
+##### 对象方式
+
+```typescript
+build: {
+  ...
+  rollupOptions: {
+    output: {
+      ...
+      manualChunks:{
+        'vue-vendor': ['vue', 'vue-router']
+      }
+    }
+	}
+}
+```
+
+在对象格式的配置中，`key`代表 chunk 的名称，`value`为一个字符串数组，每一项为第三方包的包名
+
+```javascript
+vite v4.4.9 building for production...
+✓ 34 modules transformed.
+dist/index.html                        0.54 kB │ gzip:  0.33 kB
+dist/assets/AboutView-786d9592.css     0.04 kB │ gzip:  0.06 kB
+dist/assets/index-d1e7a483.css         0.27 kB │ gzip:  0.17 kB
+dist/assets/UserView-9010cdee.js       0.55 kB │ gzip:  0.35 kB
+dist/assets/StudentView-eff7d69a.js    0.55 kB │ gzip:  0.35 kB
+dist/assets/AboutView-74a57329.js      0.78 kB │ gzip:  0.43 kB
+dist/assets/index-4fb9786f.js          5.87 kB │ gzip:  2.06 kB
+dist/assets/vue-vendor-99c39a4b.js   210.95 kB │ gzip: 49.67 kB
+✓ built in 553ms
+```
+
+可以看到之前很大的`index.js`文件被拆分了出来。
+
+##### 函数方式
+
+```typescript
+manualChunks(id) {
+  if (id.includes('node_modules/vue')) {
+    return 'vue';
+  }
+  if (id.includes('element-plus')) {
+    return 'element-plus';
+  }
+  if (id.includes('lodash-es')) {
+    return 'lodash';
+  }
+}
+```
+
+不过需要注意的是，这种方式在Vite4并不安全，因为`element-plus`这种库也依赖了`Vue`，这里单独拆分`Vue`的话，导致循环依赖的错误问题。**建议还是使用对象方式**
+
+### 2、treeshaking
+
+这个没什么可多说的，不需要额外进行配置。但有一个条件，必须是 `ES6 module` 模块才行，而且我们自己在引入的时候，注意**只需要引入具体的函数,不要直接导入全对象**
+
+### 3、代码压缩
+
+`Vite`默认使用`esbuild`进行代码压缩，速度快，如果要追求压缩效果。
+
+```typescript
+minify:esbuild
+```
+
+也可以使用`terser`，`Vite`也默认集成了`terser`，只是需要手动导入`terser`插件
+
+```typescript
+minify: 'terser',
+terserOptions: {
+  compress: {
+      drop_console: true,
+      drop_debugger: true,
+  }
+},
+```
+
+### 4、GZIP压缩
+
+`gzip` 是一种使用非常普遍的压缩格式。使用 `gzip` 压缩可以大幅减小代码体积，提升网络性能。当然`gzip`只是其中一种，`brotliCompress`也是一样，一般简称`br`
+
+服务器就可以直接帮我们处理，不过需要耗费服务器性能，所以，一般前端也可能直接把打包之后的文件进行压缩处理，直接使用插件即可[vite-plugin-compression2](https://github.com/nonzzz/vite-plugin-compression)，
+
+```typescript
+import { compression } from 'vite-plugin-compression2'
+......
+
+plugins: [
+  ......
+  compression({
+    //压缩算法，默认gzip
+    algorithm: 'brotliCompress',
+    //匹配文件
+    include: [/\.(js)$/, /\.(css)$/,],
+    //压缩超过此大小的文件,以字节为单位
+    // threshold: 10240,
+    //是否删除源文件，只保留压缩文件
+    // deleteOriginalAssets: true
+  }),
+  ]
+```
+
+### 5、图片压缩
+
+图片压缩肯定可以减少网络传输，不过需要看项目对图片清晰度的需求，一般情况下，如果美工能直接处理最好，或者我们也可以使用外部工具进行处理，甚至是网上就可以直接处理，比如：[tinypng](https://tinypng.com/)
+
+如果前端处理的话，可以使用插件[vite-plugin-imagemin](https://github.com/vbenjs/vite-plugin-imagemin)
+
+```typescript
+import viteImagemin from 'vite-plugin-imagemin'
+......
+plugins: [
+  ...... 
+  viteImagemin({
+     gifsicle: {
+       optimizationLevel: 7,
+       interlaced: false,
+     },
+     optipng: {
+       optimizationLevel: 7,
+     },
+     mozjpeg: {
+       quality: 20,
+     },
+     pngquant: {
+       quality: [0.8, 0.9],
+       speed: 4,
+     },
+     svgo: {
+       plugins: [
+         {
+           name: 'removeViewBox',
+         },
+         {
+           name: 'removeEmptyAttrs',
+           active: false,
+         },
+       ],
+     },
+   }),
+]
+```
+
+### 6、产物构建分析
+
+为了能可视化地感知到产物的体积情况，推荐大家用[rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer)来进行产物分析
+
+```typescript
+import { visualizer } from "rollup-plugin-visualizer";
+......
+plugins: [
+  visualizer({
+    // 是否打包完成之后直接打开
+    open: true,
+  }),
+],
+```
+
+### 7、CDN加速
+
+使用CDN，可以让用户从最近的服务器请求资源，能够大大的提高资源的请求获取的速度。特别是一些第三方资源库，放在CDN上不但可以提高资源请求速度，而且也能大大降低我们打包体积和打包速度。
+
+如果要把项目中的一些第三方资源放入到CDN，但是项目中我们又使用了这些资源，需要在项目中进行处理。一般比较常用的处理方式是直接使用第三方插件。比如：[rollup-plugin-external-globals](https://github.com/eight04/rollup-plugin-external-globals)
+
+```typescript
+import externalGlobals from "rollup-plugin-external-globals";
+......
+rollupOptions: {
+  external:['vue','vue-router','element-plus','vue-echarts','echarts','@vueuse/core'],
+  plugins: [
+    externalGlobals({
+      "vue": "Vue",
+      "vue-router": "VueRouter",
+      "element-plus": 'ElementPlus',
+      "@vueuse/core": "VueUse",
+      "echarts": "echarts",
+      "vue-echarts": "VueECharts",
+    })
+  ],
+}
+```
+
+### 8、打包处理
+
+如果希望设置打包之后的文件位置，可以通过相关rollup设置处理
+
+```typescript
+build:{
+  rollupOptions: {
+    output: {
+      chunkFileNames: 'assets/[name]-[hash].js',
+      entryFileNames: 'assets/[name].[hash].js',
+      assetFileNames: 'assets/xxx/[ext]/[name]-[hash].[ext]',
+    }
+}
+```
+
+### 9、自定义插件
+
+Vite 插件扩展了设计出色的 Rollup 接口，整个Rollup插件结构体系比较庞杂，简单来说，分成了`build`和`output`两大工作流的不同阶段进行分类。这个还需要单独去学习。就Vite来说他有可以和rollup结合的[通用钩子](https://cn.vitejs.dev/guide/api-plugin#universal-hooks)，也有自己的[独有钩子](https://cn.vitejs.dev/guide/api-plugin#vite-specific-hooks)
+
+**Vite独有钩子：**
+
+| **钩子名称**           | **释义**                                                     |
+| ---------------------- | ------------------------------------------------------------ |
+| config                 | 在解析 Vite 配置前调用。钩子接收原始用户配置（命令行选项指定的会与配置文件合并）和一个描述配置环境的变量，包含正在使用的 mode 和 command。 |
+| configResolved         | 在解析 Vite 配置后调用。使用这个钩子读取和存储最终解析的配置。 |
+| configureServer        | 是用于配置开发服务器的钩子。                                 |
+| configurePreviewServer | 与 [configureServer](https://link.juejin.cn?target=https%3A%2F%2Fvitejs.cn%2Fvite3-cn%2Fguide%2Fapi-plugin.html%23configureserver) 相同但是作为预览服务器。 |
+| transformIndexHtml     | 转换 index.html 的专用钩子。钩子接收当前的 HTML 字符串和转换上下文。 |
+| handleHotUpdate        | 执行自定义 HMR 更新处理。                                    |
+

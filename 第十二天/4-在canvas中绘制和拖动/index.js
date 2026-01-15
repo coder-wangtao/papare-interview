@@ -1,14 +1,14 @@
-const colorPicker = document.querySelector('input');
-const cvs = document.querySelector('canvas');
-const ctx = cvs.getContext('2d');
+const colorPicker = document.querySelector("input");
+const cvs = document.querySelector("canvas");
+const ctx = cvs.getContext("2d");
 
 function init() {
   const w = 500,
     h = 300;
   cvs.width = w * devicePixelRatio;
   cvs.height = h * devicePixelRatio;
-  cvs.style.width = w + 'px';
-  cvs.style.height = h + 'px';
+  cvs.style.width = w + "px";
+  cvs.style.height = h + "px";
 }
 
 init();
@@ -17,7 +17,7 @@ const shapes = [];
 
 class Rectangle {
   constructor(color, startX, startY) {
-    this.color = color;
+    this.color = color; // 颜色
     this.startX = startX;
     this.startY = startY;
     this.endX = startX;
@@ -49,22 +49,24 @@ class Rectangle {
     ctx.lineTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio);
     ctx.fillStyle = this.color;
     ctx.fill();
-    ctx.strokeStyle = '#fff';
-    ctx.lineCap = 'square';
+    ctx.strokeStyle = "#fff";
+    ctx.lineCap = "square";
     ctx.lineWidth = 3 * devicePixelRatio;
     ctx.stroke();
   }
 }
 
 cvs.onmousedown = (e) => {
-  const bouding = cvs.getBoundingClientRect();
+  const bouding = cvs.getBoundingClientRect(); // 获取画布cvs相对于浏览器窗口的位置和尺寸。
   const rect = new Rectangle(colorPicker.value, e.offsetX, e.offsetY);
   const shape = getShape(e.offsetX, e.offsetY);
   if (shape) {
     const { startX, startY, endX, endY } = shape;
     const mouseX = e.offsetX;
     const mouseY = e.offsetY;
+    // 记录鼠标按下时的坐标（相对于画布左上角）。
     window.onmousemove = (e) => {
+      //用来实现拖动矩形。
       const disX = e.clientX - bouding.left - mouseX;
       const disY = e.clientY - bouding.top - mouseY;
       shape.startX = startX + disX;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Progressive List Rendering with requestAnimationFrame</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        margin: 8px;
+        padding: 10px;
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="list"></ul>
+    <script>
+      const list = document.getElementById("list");
+      const items = Array.from({ length: 10000 }, (_, i) => `Item ${i + 1}`);
+
+      // 直接循环渲染
+      function renderItems(startIndex, batchSize) {
+        for (
+          let i = startIndex;
+          i < startIndex + batchSize && i < items.length;
+          i++
+        ) {
+          const li = document.createElement("li");
+          li.textContent = items[i];
+          // 随机背景颜色
+          li.style.backgroundColor = `#${Math.floor(
+            Math.random() * 16777215
+          ).toString(16)}`;
+          list.appendChild(li);
+        }
+      }
+
+      // 直接循环调用renderItems，每次20
+      for (let i = 0; i <= 10000; i += 20) {
+        renderItems(i, 20);
+      }
+
+      /* function renderItems(startIndex, batchSize) {
+        for (
+          let i = startIndex;
+          i < startIndex + batchSize && i < items.length;
+          i++
+        ) {
+          const li = document.createElement("li");
+          li.textContent = items[i];
+          // 随机背景颜色
+          li.style.backgroundColor = `#${Math.floor(
+            Math.random() * 16777215
+          ).toString(16)}`;
+          list.appendChild(li);
+        }
+
+        if (startIndex + batchSize < items.length) {
+          requestAnimationFrame(() =>
+            renderItems(startIndex + batchSize, batchSize)
+          );
+        }
+      }
+
+      requestAnimationFrame(() => renderItems(0, 20)); */ // 每次渲染20个项
+    </script>
+  </body>
+</html>

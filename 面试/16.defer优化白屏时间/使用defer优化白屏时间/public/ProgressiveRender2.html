@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Progressive List Rendering with requestIdleCallback</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        margin: 8px;
+        padding: 10px;
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="list"></ul>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const list = document.getElementById("list");
+        const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
+
+        function renderItems(deadline) {
+          while (deadline.timeRemaining() > 0 && items.length > 0) {
+            const item = items.shift();
+            const li = document.createElement("li");
+            li.textContent = item;
+            // 随机背景颜色
+            li.style.backgroundColor = `#${Math.floor(
+              Math.random() * 16777215
+            ).toString(16)}`;
+            list.appendChild(li);
+          }
+
+          if (items.length > 0) {
+            requestIdleCallback(renderItems);
+          }
+        }
+
+        requestIdleCallback(renderItems);
+      });
+    </script>
+  </body>
+</html>
