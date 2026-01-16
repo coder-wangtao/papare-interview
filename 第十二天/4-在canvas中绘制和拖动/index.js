@@ -20,33 +20,37 @@ class Rectangle {
     this.color = color; // 颜色
     this.startX = startX;
     this.startY = startY;
-    this.endX = startX;
-    this.endY = startY;
+    this.endX = startX; // 拖动鼠标时会更新
+    this.endY = startY; // 拖动鼠标时会更新
   }
 
+  // 返回左边界
   get minX() {
-    return Math.min(this.startX, this.endX);
+    return Math.min(this.startX, this.endX); // 防止从右往左画导致坐标错误
   }
 
+  // 返回上边界
   get minY() {
     return Math.min(this.startY, this.endY);
   }
 
+  // 返回右边界
   get maxX() {
     return Math.max(this.startX, this.endX);
   }
 
+  // 返回下边界
   get maxY() {
     return Math.max(this.startY, this.endY);
   }
 
   draw() {
     ctx.beginPath();
-    ctx.moveTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio);
-    ctx.lineTo(this.maxX * devicePixelRatio, this.minY * devicePixelRatio);
-    ctx.lineTo(this.maxX * devicePixelRatio, this.maxY * devicePixelRatio);
-    ctx.lineTo(this.minX * devicePixelRatio, this.maxY * devicePixelRatio);
-    ctx.lineTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio);
+    ctx.moveTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio); // 移动画笔到左上角
+    ctx.lineTo(this.maxX * devicePixelRatio, this.minY * devicePixelRatio); // 画到右上角
+    ctx.lineTo(this.maxX * devicePixelRatio, this.maxY * devicePixelRatio); // 画到右下角
+    ctx.lineTo(this.minX * devicePixelRatio, this.maxY * devicePixelRatio); // 画到左下角
+    ctx.lineTo(this.minX * devicePixelRatio, this.minY * devicePixelRatio); // 闭合回起点
     ctx.fillStyle = this.color;
     ctx.fill();
     ctx.strokeStyle = "#fff";
@@ -101,9 +105,10 @@ function getShape(x, y) {
   }
 }
 
+// 保证画布内容实时更新，无论是拖动矩形还是绘制新矩形，画面都会即时刷新。
 function draw() {
   requestAnimationFrame(draw);
-  ctx.clearRect(0, 0, cvs.width, cvs.height);
+  ctx.clearRect(0, 0, cvs.width, cvs.height); // 清空画布
   for (const shape of shapes) {
     shape.draw();
   }
