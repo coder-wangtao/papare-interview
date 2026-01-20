@@ -1,5 +1,6 @@
 <template>
   <div ref="list" :style="{ height }" class="infinite-list-container" @scroll="scrollEvent">
+    <!-- 占位 -->
     <div ref="phantom" class="infinite-list-phantom"></div>
     <div ref="content" class="infinite-list">
       <div
@@ -23,7 +24,7 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
-  // 预估高度
+  // 每一项的“预估高度”
   estimatedItemSize: {
     type: Number,
     required: true
@@ -51,14 +52,24 @@ const _listData = computed(() => {
   }))
 })
 
+// 最多能显示多少条
 const visibleCount = computed(() => {
   return Math.ceil(screenHeight.value / props.estimatedItemSize)
 })
 
+// 真正渲染的数据
 const visibleData = computed(() => {
   return _listData.value.slice(start.value, end.value)
 })
 
+//一开始以预估高度做初始化
+// 虚拟列表的灵魂
+// {
+//   index,      // 原始索引
+//   height,     // 当前真实高度
+//   top,        // 距顶部距离
+//   bottom      // top + height
+// }
 const initPositions = () => {
   positions = props.listData.map((d, index) => ({
     index,
@@ -68,6 +79,7 @@ const initPositions = () => {
   }))
 }
 
+// 根据 scrollTop 找起始 index（二分查找）
 const getStartIndex = (scrollTop = 0) => {
   return binarySearch(positions, scrollTop)
 }
@@ -96,7 +108,7 @@ const binarySearch = (list, value) => {
 const updateItemsSize = () => {
   items.value.forEach((node) => {
     let rect = node.getBoundingClientRect()
-    let height = rect.height
+    let height = rect.height // 获取真实高度
     let index = +node.id.slice(1)
     let oldHeight = positions[index].height
     let dValue = oldHeight - height
@@ -136,6 +148,7 @@ onUpdated(() => {
     if (!items.value || !items.value.length) {
       return
     }
+    // 修正真实高度
     updateItemsSize()
     let height = positions[positions.length - 1].bottom
     phantom.value.style.height = height + 'px'
