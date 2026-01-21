@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUpdated, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, onUpdated, watch, nextTick, watchEffect } from 'vue'
 
 const props = defineProps({
   listData: {
@@ -25,6 +25,7 @@ const props = defineProps({
     default: () => []
   },
   // 预估每条高度，用于初始化和计算可视条数
+  //100
   estimatedItemSize: {
     type: Number,
     required: true
@@ -60,9 +61,11 @@ const _listData = computed(() => {
 })
 
 // 根据预估高度计算最多可显示多少条。
+// 显示 10 个
 const visibleCount = computed(() => {
   return Math.ceil(screenHeight.value / props.estimatedItemSize)
 })
+
 // 起始 可视区能显示的条目数（预估计算）。
 const aboveCount = computed(() => {
   return Math.min(start.value, props.bufferScale * visibleCount.value)
@@ -77,6 +80,7 @@ const visibleData = computed(() => {
   let endIdx = end.value + belowCount.value
   return _listData.value.slice(startIdx, endIdx)
 })
+
 // 初始化每条 item 的位置和高度（预估）。
 const initPositions = () => {
   positions.value = props.listData.map((d, index) => ({
@@ -92,7 +96,7 @@ const getStartIndex = (scrollTop = 0) => {
   return binarySearch(positions.value, scrollTop)
 }
 
-// positions 中找到第一个 bottom >= scrollTop 的 item。
+// 在 list 中查找第一个 bottom >= value 的元素。
 const binarySearch = (list, value) => {
   let start = 0
   let end = list.length - 1
@@ -116,6 +120,10 @@ const binarySearch = (list, value) => {
 }
 
 // 每条 item 实际高度变化时更新 positions。
+// 用真实 DOM 修正高度，
+// 再把「误差」同步传播给后续 item。
+// 用已经渲染到 DOM 的 item 的真实高度，修正 positions 中的预估高度，
+// 并同步更新它后面所有 item 的 top / bottom。
 const updateItemsSize = () => {
   let nodes = items.value
   nodes.forEach((node) => {
@@ -143,16 +151,20 @@ const updateItemsSize = () => {
 }
 
 // 设置 transform 偏移
-// “当前渲染的第一条 DOM（含上方 buffer）”对齐到它在完整列表中的真实位置。
+// 计算「当前渲染的第一个 DOM（包含上方 buffer）」在整个完整列表中应该向下偏移多少像素，然后用 transform 把它放到正确的位置。
 const setStartOffset = () => {
   let startOffset
   if (start.value >= 1) {
-    // size = 「你多渲染出来的上方 buffer 一共占了多少像素」
+    // 你多渲染出来的上方 buffer，一共占了多少高度
+    // 从「buffer 第一条」到「可视第一条」之间，一共占了多少像素
+    // size = 上方 buffer 的总高度
     let size =
+      //真正可视区域第一条 item 的顶部位置
       positions.value[start.value].top -
       (positions.value[start.value - aboveCount.value]
         ? positions.value[start.value - aboveCount.value].top
         : 0)
+    // start 之前所有 item 的真实总高度
     startOffset = positions.value[start.value - 1].bottom - size
   } else {
     startOffset = 0
@@ -163,8 +175,10 @@ const setStartOffset = () => {
 // 滚动事件处理
 const scrollEvent = () => {
   let scrollTop = list.value.scrollTop
+  // 符合条件的索引，作为虚拟列表渲染的起点。
   start.value = getStartIndex(scrollTop)
   end.value = start.value + visibleCount.value
+  console.log(start.value, end.value)
   setStartOffset()
 }
 
@@ -183,9 +197,9 @@ onUpdated(() => {
     // 更新真实 item 高度
     updateItemsSize()
     let height = positions.value[positions.value.length - 1].bottom
-    // 更新 phantom 高度
+    // 修正「占位容器（phantom）」的总高度
     phantom.value.style.height = height + 'px'
-    // 偏移 content
+    // 重新计算 transform 偏移，防止内容跳动
     setStartOffset()
   })
 })
